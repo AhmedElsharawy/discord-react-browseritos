@@ -1,26 +1,37 @@
-import React from "react";
-import { io } from "socket.io-client";
+import React, { useState, useEffect } from 'react';
 
-const App = () => {
-  const [time, setTime] = React.useState("fetching");
+function App() {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+  const [ws, setWs] = useState(null);
 
-  React.useEffect(() => {
-    const socket = io("http://localhost:5000");
-
-    socket.on("connect", () => console.log(socket.id));
-    socket.on("connect_error", () => {
-      setTimeout(() => socket.connect(), 5000);
-    });
-
-    socket.on("send_string", function (data) {
-      console.log(data);
-    });
-
-    socket.on("time", (data) => setTime(data));
-    socket.on("disconnect", () => setTime("server disconnected"));
+  useEffect(() => {
+    const ws = new WebSocket('ws://localhost:5000');
+    ws.onmessage = (event) => {
+      setMessages((prevMessages) => [...prevMessages, event.data]);
+    };
+    setWs(ws);
+    return () => ws.close();
   }, []);
 
-  return <div className="App">{time}</div>;
-};
+  const sendMessage = () => {
+    if (ws && input.trim() !== '') {
+      ws.send(input);
+      setInput('');
+    }
+  };
+
+  return (
+    <div>
+      <ul>
+        {messages.map((message, index) => (
+          <li key={index}>{message}</li>
+        ))}
+      </ul>
+      <input value={input} onChange={(e) => setInput(e.target.value)} />
+      <button onClick={sendMessage}>Send</button>
+    </div>
+  );
+}
 
 export default App;
