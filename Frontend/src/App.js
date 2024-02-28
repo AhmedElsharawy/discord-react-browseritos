@@ -12,6 +12,10 @@ const App = () => {
       setTimeout(() => socket.connect(), 5000);
     });
 
+    socket.on("send_string", function (data) {
+      console.log(data);
+    });
+
     socket.on("time", (data) => setTime(data));
     socket.on("disconnect", () => setTime("server disconnected"));
   }, []);

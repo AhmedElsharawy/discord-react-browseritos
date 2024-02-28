@@ -12,6 +12,7 @@ const io = socketIo(server, {
 io.on("connection", (socket) => {
   console.log("client connected: ", socket.id);
   socket.join("clock-room");
+  socket.emit("send_string", "Salama3rs");
 
   socket.on("disconnect", (reason) => {
     console.log(reason);
