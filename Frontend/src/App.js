@@ -11,9 +11,9 @@ function App() {
   const randomInsult = insultsArray[Math.floor(Math.random() * insultsArray.length)];
   console.log(randomInsult);
 
- 
+
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:8080');
+    const ws = new WebSocket('ws://trashcentre.ddns.net:8080');
     ws.onopen = () => {
       console.log('WebSocket connection established');
     };
@@ -29,7 +29,7 @@ function App() {
     setWs(ws);
     return () => ws.close();
   }, []);
-  
+
 
 
 
@@ -39,7 +39,7 @@ function App() {
       setInput('');
     }
   };
-  
+
 
   return (
     <div>
