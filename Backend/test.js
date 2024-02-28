@@ -9,7 +9,7 @@ const client = new Client({
   ],
 });
 
-const wss = new WebSocket.Server({ port: 5000 });
+const wss = new WebSocket.Server({ port: 8080 });
 
 const tokenID = 'MTIxMTc0MzI3Nzc3OTUyMTY0OA.GP1Q7K.SuEYrlEnW3GslWpjDqUhosQWcmYrjQ3WXqYGEs';
 const clientID = '1211743277779521648';
@@ -31,12 +31,24 @@ client.on('messageCreate', async message => {
 });
 
 wss.on('connection', (ws) => {
-    ws.on('message', async (message) => {
-        if (message.trim() !== '') {
-          const channel = await client.channels.fetch(channelID);
-          channel.send(message);
-        }
-      });
+  ws.on('message', async (message) => {
+    const text = message.toString(); // Convert to string if not already
+    if (text.trim() !== '') {
+      const channel = await client.channels.fetch(channelID);
+      channel.send(text);
+    }
+    ws.onclose = (event) => {
+      console.log('WebSocket connection closed', event);
+    };
+    
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+    
+  });
 });
+
+
+
 
 client.login(tokenID);

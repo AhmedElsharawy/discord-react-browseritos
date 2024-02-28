@@ -1,25 +1,45 @@
 import React, { useState, useEffect } from 'react';
+import insultsArray from './sabQasf';
 
 function App() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [ws, setWs] = useState(null);
 
+
+  // get a random insult from the array of insults
+  const randomInsult = insultsArray[Math.floor(Math.random() * insultsArray.length)];
+  console.log(randomInsult);
+
+ 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:5000');
+    const ws = new WebSocket('ws://localhost:8080');
+    ws.onopen = () => {
+      console.log('WebSocket connection established');
+    };
     ws.onmessage = (event) => {
       setMessages((prevMessages) => [...prevMessages, event.data]);
+    };
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+    ws.onclose = () => {
+      console.log('WebSocket connection closed');
     };
     setWs(ws);
     return () => ws.close();
   }, []);
+  
+
+
 
   const sendMessage = () => {
-    if (ws && input.trim() !== '') {
-      ws.send(input);
+    if (input.trim() !== '') {
+      ws?.send(input);
       setInput('');
     }
   };
+  
 
   return (
     <div>
