@@ -6,12 +6,6 @@ function App() {
   const [input, setInput] = useState('');
   const [ws, setWs] = useState(null);
 
-
-  // get a random insult from the array of insults
-  const randomInsult = insultsArray[Math.floor(Math.random() * insultsArray.length)];
-  console.log(randomInsult);
-
-
   useEffect(() => {
     const ws = new WebSocket('ws://trashcentre.ddns.net:8080');
     ws.onopen = () => {
@@ -35,10 +29,13 @@ function App() {
 
   const sendMessage = () => {
     if (input.trim() !== '') {
+      const randomInsult = insultsArray[Math.floor(Math.random() * insultsArray.length)];
+      console.log(randomInsult); // Log an insult when sending a message
       ws?.send(input);
       setInput('');
     }
   };
+  
 
 
   return (
