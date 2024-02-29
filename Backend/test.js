@@ -1,5 +1,6 @@
 import { Client, GatewayIntentBits } from 'discord.js';
 import WebSocket from 'ws';
+import insultsArray from './data.js';
 
 const client = new Client({
   intents: [
@@ -19,7 +20,24 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
+client.on('interactionCreate', async interaction => {
+  if (!interaction.isCommand()) return;
+
+  if (interaction.commandName === 'insult') {
+    const randomInsult = insultsArray[Math.floor(Math.random() * insultsArray.length)];
+    await interaction.reply(randomInsult);
+  }
+});
+
 client.on('messageCreate', async message => {
+  if (message.author.bot) return; // Ignore bot messages
+
+  if (message.content === '/insult') {
+    const randomInsult = insultsArray[Math.floor(Math.random() * insultsArray.length)];
+    message.channel.send(randomInsult);
+    return; // Stop further processing
+  }
+
   if (message.channel.id === channelID.trim()) {
     // Broadcast the message to all connected WebSocket clients
     wss.clients.forEach((client) => {

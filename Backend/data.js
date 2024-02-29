@@ -41,4 +41,6 @@ const insultsArray = [
     "You're like a glitch in the matrix, but less cool and more annoying."
   ];
 
+  const logsArray = [ ]
+
   export default insultsArray;

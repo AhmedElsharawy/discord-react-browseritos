@@ -32,7 +32,7 @@
   dependencies:
     discord-api-types "0.37.61"
 
-"@discordjs/rest@^2.1.0":
+"@discordjs/rest@^2.1.0", "@discordjs/rest@^2.2.0":
   version "2.2.0"
   resolved "https://registry.npmjs.org/@discordjs/rest/-/rest-2.2.0.tgz"
   integrity sha512-nXm9wT8oqrYFRMEqTXQx9DUTeEtXUDMmnUKIhZn6O2EeDY9VCdwj23XCPq7fkqMPKdF7ldAfeVKyxxFdbZl59A==
@@ -259,6 +259,11 @@ destroy@1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/destroy/-/destroy-1.2.0.tgz"
   integrity sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==
+
+discord-api-types@^0.37.71:
+  version "0.37.71"
+  resolved "https://registry.npmjs.org/discord-api-types/-/discord-api-types-0.37.71.tgz"
+  integrity sha512-oYDVWoiQdblr9DpwOgpi5d78dVhPcoN9YZCCqYZf2T0v9+iICs7k2bYGumoHuYMtaIitpp5aQNs+2guVkgjbOA==
 
 discord-api-types@0.37.61:
   version "0.37.61"
