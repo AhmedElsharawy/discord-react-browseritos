@@ -41,6 +41,43 @@ const insultsArray = [
     "You're like a glitch in the matrix, but less cool and more annoying."
   ];
 
-  const jokesArray = [ ]
+const jokesArray = [
+    "Why did the developer break up with his girlfriend? She couldn't handle his recursive love.",
+    "Why don't algorithms ever get lost? Because they always follow their GPS (General Problem Solver).",
+    "Why was the HTML file sad? It had too many tags but no one to <header> with.",
+    "Why did the SQL query go to therapy? It had too many relationship issues.",
+    "Why did the computer go to the doctor? Because it had a virus and needed a byte.",
+    "Why did the AI break up with its neural network? It felt like it was being overtrained.",
+    "Why did the programmer go to art class? To learn how to draw circles in JavaScript.",
+    "Why was the JavaScript developer sad? Because he lost all his classes and couldn't find them in the DOM.",
+    "Why don't programmers like to play hide and seek? Because good luck hiding when you're always in plain sight (of the compiler).",
+    "Why did the programmer bring a ladder to the bar? Because he heard the drinks were on the house.",
+    "Why was the programmer cold at night? He forgot to close his while loop.",
+    "Why was the function feeling insecure? Because it had too many parameters and felt like it wasn't being called enough.",
+    "Why was the HTML file lonely? It had no body to share its content with.",
+    "Why was the computer cold? It left its browser open all night.",
+    "Why did the developer go broke? He spent all his money on software subscriptions.",
+    "Why did the programmer get stuck in the shower? Because he couldn't find the soap (source) code.",
+    "Why did the JavaScript code always win at poker? Because it could bluff with promises.",
+    "Why did the developer break up with his girlfriend? She couldn't handle his recursive love.",
+    "Why don't algorithms ever get lost? Because they always follow their GPS (General Problem Solver).",
+    "Why was the HTML file sad? It had too many tags but no one to <header> with.",
+    "Why did the SQL query go to therapy? It had too many relationship issues.",
+    "Why did the computer go to the doctor? Because it had a virus and needed a byte.",
+    "Why did the AI break up with its neural network? It felt like it was being overtrained.",
+    "Why did the programmer go to art class? To learn how to draw circles in JavaScript.",
+    "Why was the JavaScript developer sad? Because he lost all his classes and couldn't find them in the DOM.",
+    "Why don't programmers like to play hide and seek? Because good luck hiding when you're always in plain sight (of the compiler).",
+    "Why did the programmer bring a ladder to the bar? Because he heard the drinks were on the house.",
+    "Why was the programmer cold at night? He forgot to close his while loop.",
+    "Why was the function feeling insecure? Because it had too many parameters and felt like it wasn't being called enough.",
+    "Why was the HTML file lonely? It had no body to share its content with.",
+    "Why was the computer cold? It left its browser open all night.",
+    "Why did the developer go broke? He spent all his money on software subscriptions.",
+    "Why did the programmer get stuck in the shower? Because he couldn't find the soap (source) code.",
+    "Why did the JavaScript code always win at poker? Because it could bluff with promises.",
+    "Why don't programmers play hide and seek with AI? Because it always finds them by the first iteration.",
+];
 
-  export default insultsArray;
+
+  export default insultsArray jokesArray;
