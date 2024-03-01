@@ -9,8 +9,12 @@ const commands = [
   {
     name: 'insult',
     description: 'Sends a random insult!',
+  }, 
+  {
+    name: 'kick',
+    description: 'Kicks a user from the server',
   }
-  
+
 ];
 
 const rest = new REST({ version: '9' }).setToken(token);

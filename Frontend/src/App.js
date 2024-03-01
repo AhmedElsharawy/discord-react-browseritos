@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import insultsArray from './sabQasf';
+// import insultsArray from './s abQasf';
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -7,30 +7,40 @@ function App() {
   const [ws, setWs] = useState(null);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://trashcentre.ddns.net:8080');
-    ws.onopen = () => {
-      console.log('WebSocket connection established');
-    };
-    ws.onmessage = (event) => {
-      setMessages((prevMessages) => [...prevMessages, event.data]);
-    };
-    ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-    ws.onclose = () => {
-      console.log('WebSocket connection closed');
-    };
-    setWs(ws);
-    return () => ws.close();
+    function connect() {
+      const ws = new WebSocket('wss://trashcentre.com:443');
+  
+      ws.onopen = () => {
+        console.log('WebSocket connection established');
+      };
+  
+      ws.onmessage = (event) => {
+        setMessages((prevMessages) => [...prevMessages, event.data]);
+      };
+  
+      ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
+  
+      ws.onclose = () => {
+        console.log('WebSocket connection closed. Attempting to reconnect...');
+        setTimeout(connect, 2000); // Try to reconnect every 2 seconds
+      };
+  
+      setWs(ws);
+    }
+  
+    connect();
+  
+    return () => ws?.close();
   }, []);
+  
 
 
 
 
   const sendMessage = () => {
     if (input.trim() !== '') {
-      const randomInsult = insultsArray[Math.floor(Math.random() * insultsArray.length)];
-      console.log(randomInsult); // Log an insult when sending a message
       ws?.send(input);
       setInput('');
     }
