@@ -15,7 +15,18 @@ function App() {
       };
   
       ws.onmessage = (event) => {
-        setMessages((prevMessages) => [...prevMessages, event.data]);
+        try {
+          const data = JSON.parse(event.data);
+          // Check if the received data is an array (indicating it's the initial log data)
+          if (Array.isArray(data)) {
+            setMessages(data.map(log => `from ${log.author}: ${log.content}`));
+          } else {
+            // Handle individual messages as before
+            setMessages((prevMessages) => [...prevMessages, event.data]);
+          }
+        } catch (error) {
+          console.error('Error parsing WebSocket message:', error);
+        }
       };
   
       ws.onerror = (error) => {
@@ -34,6 +45,7 @@ function App() {
   
     return () => ws?.close();
   }, []);
+  
   
 
 

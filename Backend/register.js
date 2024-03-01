@@ -11,8 +11,8 @@ const commands = [
     description: 'Sends a random insult!',
   }, 
   {
-    name: 'kick',
-    description: 'Kicks a user from the server',
+    name: 'joke',
+    description: 'sends a random joke!',
   }
 
 ];
