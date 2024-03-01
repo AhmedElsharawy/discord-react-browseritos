@@ -34,6 +34,7 @@ client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
+// Creating commands for the bot to use (sooon connected to the UI)
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
 
@@ -51,7 +52,7 @@ client.on("messageCreate", async (message) => {
     const randomInsult =
       insultsArray[Math.floor(Math.random() * insultsArray.length)];
     message.channel.send(randomInsult);
-    return; // Stop further processing
+    return;
   }
 
   if (message.channel.id === channelID.trim()) {
@@ -59,11 +60,32 @@ client.on("messageCreate", async (message) => {
     wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(
-          `Message from ${message.author.tag} in channel ${message.channel.name}: ${message.content}`,
+          `from ${message.author.tag}: ${message.content}`,
         );
       }
     });
+
+// Append message to logs.json
+const logEntry = {
+  timestamp: new Date().toISOString(),
+  author: message.author.tag,
+  channel: message.channel.name,
+  content: message.content
+};
+
+// Read current logs, update them, and then write back
+fs.readFile('./logs.json', (err, data) => {
+  let logs = [];
+  if (!err) {
+    logs = JSON.parse(data.toString());
   }
+  logs.push(logEntry);
+
+  fs.writeFile('./logs.json', JSON.stringify(logs, null, 2), (err) => {
+    if (err) console.error('Error writing to logs.json:', err);
+  });
+});
+}
 });
 
 wss.on("connection", (ws) => {
