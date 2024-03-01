@@ -8,7 +8,7 @@ function App() {
 
   useEffect(() => {
     function connect() {
-      const ws = new WebSocket('wss://trashcentre.com:443');
+      const ws = new WebSocket('wss://trashcentre.com:8080');
   
       ws.onopen = () => {
         console.log('WebSocket connection established');

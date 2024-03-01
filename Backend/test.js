@@ -83,7 +83,7 @@ wss.on("connection", (ws) => {
   });
 });
 
-server.listen(443, () => {
+server.listen(8080, () => {
   console.log('HTTPS and WebSocket server listening on port 8080');
 });
 
