@@ -1,6 +1,6 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import WebSocket from "ws";
-import insultsArray from "./data.js";
+import { insultsArray, jokesArray } from "./data.js";
 import https from "https";
 import fs from "fs";
 import express from "express";
@@ -38,18 +38,26 @@ client.on("ready", () => {
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
 
-  if (interaction.commandName === "insult") {
-    const randomInsult =
-      insultsArray[Math.floor(Math.random() * insultsArray.length)];
-    await interaction.reply(randomInsult);
+  try {
+    // Handling "insult" command
+    if (interaction.commandName === "insult") {
+      const randomIndex = Math.floor(Math.random() * insultsArray.length);
+      const randomInsult = insultsArray[randomIndex];
+      await interaction.reply({ content: randomInsult, ephemeral: true });
+    }
+    // Handling "joke" command
+    else if (interaction.commandName === "joke") {
+      const randomIndex = Math.floor(Math.random() * jokesArray.length);
+      const randomJoke = jokesArray[randomIndex];
+      await interaction.reply({ content: randomJoke, ephemeral: true });
+    }
+  } catch (error) {
+    console.error(`Failed to send response for ${interaction.commandName}:`, error);
+    // Fallback reply in case of an error
+    await interaction.reply({ content: "Oops! Something went wrong.", ephemeral: true });
   }
-
-  if (interaction.commandName === "joke") {
-    const randomJoke = jokesArray[Math.floor(Math.random() * jokesArray.length)];
-    await interaction.reply(randomJoke);
-  }
-
 });
+
 
 client.on("messageCreate", async (message) => {
   // if (message.author.bot) return; 
@@ -105,23 +113,33 @@ client.on("messageCreate", async (message) => {
 
 
 wss.on("connection", (ws) => {
-
-   // Send the last 10 logs to the newly connected client
-   fs.readFile('./logs.json', (err, data) => {
-    if (err) {
-      console.error('Error reading logs.json:', err);
-      return;
-    }
-    
-    try {
-      const logs = JSON.parse(data.toString());
-      // Send only the last 10 logs
-      const lastTenLogs = logs.slice(-10);
-      ws.send(JSON.stringify(lastTenLogs));
-    } catch (parseError) {
-      console.error('Error parsing logs.json:', parseError);
-    }
-  });
+  // Send the last 10 logs to the newly connected client
+  fs.readFile('./logs.json', 'utf8', (err, data) => {
+   if (err) {
+     console.error('Error reading logs.json:', err);
+     // Optionally, send an error message or empty log array to the client
+     ws.send(JSON.stringify([]));
+     return;
+   }
+   
+   // Check if data is not empty and is valid JSON before parsing
+   if (data.trim()) {
+     try {
+       const logs = JSON.parse(data);
+       // Send only the last 10 logs
+       const lastTenLogs = logs.slice(-10);
+       ws.send(JSON.stringify(lastTenLogs));
+     } catch (parseError) {
+       console.error('Error parsing logs.json:', parseError);
+       // Optionally, send an error message or empty log array to the client
+       ws.send(JSON.stringify([]));
+     }
+   } else {
+     // If data is empty, log and optionally send an empty array to the client
+     console.log('logs.json is empty.');
+     ws.send(JSON.stringify([]));
+   }
+ });
 
 
   ws.on("message", async (message) => {

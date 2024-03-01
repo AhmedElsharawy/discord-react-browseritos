@@ -15,19 +15,24 @@ function App() {
       };
   
       ws.onmessage = (event) => {
+        // Attempt to parse the event data as JSON
         try {
           const data = JSON.parse(event.data);
           // Check if the received data is an array (indicating it's the initial log data)
           if (Array.isArray(data)) {
             setMessages(data.map(log => `from ${log.author}: ${log.content}`));
           } else {
-            // Handle individual messages as before
-            setMessages((prevMessages) => [...prevMessages, event.data]);
+            // If data is an object but not an array, handle accordingly
+            // This part can be customized based on the specific data structure you expect
+            console.log("Received JSON object", data);
           }
         } catch (error) {
-          console.error('Error parsing WebSocket message:', error);
+          // If JSON.parse() fails, it means the message is not in JSON format
+          // Treat the message as plain text and add it to the messages array
+          setMessages((prevMessages) => [...prevMessages, event.data]);
         }
       };
+      
   
       ws.onerror = (error) => {
         console.error('WebSocket error:', error);
@@ -46,9 +51,6 @@ function App() {
     return () => ws?.close();
   }, []);
   
-  
-
-
 
 
   const sendMessage = () => {

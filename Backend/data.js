@@ -1,4 +1,4 @@
-const insultsArray = [
+export const insultsArray = [
   "If brains were dynamite, you couldn't blow your nose.",
   "You're the human equivalent of a participation award.",
   "Somewhere out there, a tree is tirelessly producing oxygen so you can breathe. I think you owe it an apology.",
@@ -41,7 +41,7 @@ const insultsArray = [
   "You're like a glitch in the matrix, but less cool and more annoying.",
 ];
 
-const jokesArray = [
+export const jokesArray = [
   "Why did the developer break up with his girlfriend? She couldn't handle his recursive love.",
   "Why don't algorithms ever get lost? Because they always follow their GPS (General Problem Solver).",
   "Why was the HTML file sad? It had too many tags but no one to <header> with.",
@@ -78,5 +78,3 @@ const jokesArray = [
   "Why did the JavaScript code always win at poker? Because it could bluff with promises.",
   "Why don't programmers play hide and seek with AI? Because it always finds them by the first iteration.",
 ];
-
-export default { insultsArray, jokesArray };
