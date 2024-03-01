@@ -4,13 +4,16 @@ import { insultsArray, jokesArray } from "./data.js";
 import https from "https";
 import fs from "fs";
 import express from "express";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
 // loading SSL cert
 const server = https.createServer({  
-  cert: fs.readFileSync('/home/aysal/trashcentre.com_ssl.cer'),
-  key: fs.readFileSync('/home/aysal/trashcentre.com_private_key.key')
+  cert: fs.readFileSync(process.env.SSL_CERT_PATH),
+  key: fs.readFileSync(process.env.SSL_KEY_PATH)
 });
 
 const wss = new WebSocket.Server({ server });
@@ -25,10 +28,9 @@ const client = new Client({
   ],
 });
 
-const tokenID =
-  "MTIxMTc0MzI3Nzc3OTUyMTY0OA.GP1Q7K.SuEYrlEnW3GslWpjDqUhosQWcmYrjQ3WXqYGEs";
-const clientID = "1211743277779521648";
-const channelID = "1212438079068180532";
+const tokenID = process.env.TOKEN_ID;
+const clientID = process.env.CLIENT_ID; // Note: This appears unused in your provided code.
+const channelID = process.env.CHANNEL_ID;
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
