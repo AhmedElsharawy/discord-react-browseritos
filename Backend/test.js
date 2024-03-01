@@ -43,20 +43,21 @@ client.on("interactionCreate", async (interaction) => {
     if (interaction.commandName === "insult") {
       const randomIndex = Math.floor(Math.random() * insultsArray.length);
       const randomInsult = insultsArray[randomIndex];
-      await interaction.reply({ content: randomInsult, ephemeral: true });
+      await interaction.reply({ content: randomInsult, ephemeral: false }); // Now visible to everyone
     }
     // Handling "joke" command
     else if (interaction.commandName === "joke") {
       const randomIndex = Math.floor(Math.random() * jokesArray.length);
       const randomJoke = jokesArray[randomIndex];
-      await interaction.reply({ content: randomJoke, ephemeral: true });
+      await interaction.reply({ content: randomJoke, ephemeral: false }); // Now visible to everyone
     }
   } catch (error) {
     console.error(`Failed to send response for ${interaction.commandName}:`, error);
     // Fallback reply in case of an error
-    await interaction.reply({ content: "Oops! Something went wrong.", ephemeral: true });
+    await interaction.reply({ content: "Oops! Something went wrong.", ephemeral: false }); // Now visible to everyone
   }
 });
+
 
 
 client.on("messageCreate", async (message) => {
