@@ -11,7 +11,7 @@ function ChatBox() {
   };
 
   useEffect(() => {
-    let ws; // Define ws here
+    let ws;
 
     function connect() {
       ws = new WebSocket("wss://trashcentre.com:8080");
@@ -23,14 +23,18 @@ function ChatBox() {
       ws.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
-          if (Array.isArray(data)) {
+      
+          if (data.type === 'initialLogs' && Array.isArray(data.data)) {
             setMessages(
-              data.map((log) => `from ${log.author}: ${log.content}`),
+              data.data.map((log) => `${log.author}: ${log.content}`),
             );
+          } else if (data.text && data.timestamp) {
+            setMessages((prevMessages) => [...prevMessages, `${data.text} at ${data.timestamp}`]);
           } else {
-            console.log("Received JSON object", data);
+            console.log("Received JSON object of different type", data);
           }
         } catch (error) {
+          console.error("Error parsing JSON data:", error);
           setMessages((prevMessages) => [...prevMessages, event.data]);
         }
       };
@@ -49,7 +53,7 @@ function ChatBox() {
 
     connect();
 
-    return () => ws?.close(); // ws is now in scope
+    return () => ws?.close();
   }, []);
 
   useEffect(scrollToBottom, [messages]);

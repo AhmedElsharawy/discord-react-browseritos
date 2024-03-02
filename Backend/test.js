@@ -89,25 +89,35 @@ client.on("messageCreate", async (message) => {
 });
 
 
-wss.on("connection", (ws) => {
-  sendLastTenLogs(ws); // Using the function from logger.js
+wss.on("connection", async (ws) => {
+  const lastTenLogs = await sendLastTenLogs(); // Fetch the last ten logs
+  ws.send(JSON.stringify({ type: 'initialLogs', data: lastTenLogs })); // Already sending JSON here
 
   ws.on("message", async (message) => {
     const text = message.toString(); // Convert to string if not already
     if (text.trim() !== "") {
+      // Prepare a JSON object to send
+      const messageData = {
+        type: 'newMessage',
+        data: {
+          text: text,
+          timestamp: new Date().toISOString(),
+        }
+      };
+      // Send JSON string to the WebSocket clients
+      wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(JSON.stringify(messageData));
+        }
+      });
+
+      // You might still want to send this text to a Discord channel or handle it differently
       const channel = await client.channels.fetch(channelID);
       channel.send(text);
     }
   });
-
-  ws.onclose = (event) => {
-    console.log("WebSocket connection closed", event);
-  };
-
-  ws.onerror = (error) => {
-    console.error("WebSocket error:", error);
-  };
 });
+
 
 
 server.listen(8080, () => {
