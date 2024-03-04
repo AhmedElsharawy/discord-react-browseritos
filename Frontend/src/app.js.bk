@@ -1,0 +1,90 @@
+import React, { useState, useEffect } from "react";
+
+function ChatBox() {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const [ws, setWs] = useState(null);
+
+  useEffect(() => {
+    let ws; // Define ws here
+
+    function connect() {
+      ws = new WebSocket("wss://trashcentre.com:8080");
+
+      ws.onopen = () => {
+        console.log("WebSocket connection established");
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (Array.isArray(data)) {
+            setMessages(
+              data.map((log) => `from ${log.author}: ${log.content}`),
+            );
+          } else {
+            console.log("Received JSON object", data);
+          }
+        } catch (error) {
+          setMessages((prevMessages) => [...prevMessages, event.data]);
+        }
+      };
+
+      ws.onerror = (error) => {
+        console.error("WebSocket error:", error);
+      };
+
+      ws.onclose = () => {
+        console.log("WebSocket connection closed. Attempting to reconnect...");
+        setTimeout(connect, 2000);
+      };
+
+      setWs(ws);
+    }
+
+    connect();
+
+    return () => ws?.close(); // ws is now in scope
+  }, []);
+
+  const sendMessage = (event) => {
+    event.preventDefault();
+    if (input.trim() !== "") {
+      ws?.send(input);
+      setInput("");
+    }
+  };
+
+  return (
+    <div className="p-4">
+      <div className="mb-4 h-64 overflow-auto rounded bg-gray-100 p-4">
+        {messages.map((message, index) => (
+          <div key={index} className="mb-2">
+            <div className="text-sm text-gray-500">User</div>
+            <div className="inline-block rounded bg-blue-500 px-2 py-1 text-white">
+              {message}
+            </div>
+          </div>
+        ))}
+      </div>
+      <form onSubmit={sendMessage}>
+        <div className="flex">
+          <input
+            type="text"
+            className="mr-2 flex-grow rounded border px-2 py-1"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="rounded bg-blue-500 px-4 py-1 text-white"
+          >
+            Send
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+export default ChatBox;

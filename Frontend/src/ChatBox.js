@@ -45,7 +45,7 @@ function ChatBox() {
 
       ws.onclose = () => {
         console.log("WebSocket connection closed. Attempting to reconnect...");
-        setTimeout(connect, 2000);
+        setTimeout(connect, 1000);
       };
 
       setWs(ws);
