@@ -44,7 +44,7 @@ export const appendLog = async (logEntry) => {
 export const sendLastTenLogs = async () => {
   try {
     const logs = await readLogs();
-    return logs.slice(-10);
+    return logs.slice(-15);
   } catch (err) {
     console.error('Failed to send logs:', err);
     return [];

@@ -72,7 +72,7 @@ client.on("messageCreate", async (message) => {
     // Broadcast the message to all connected WebSocket clients
     wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
-        client.send(`from ${message.author.tag}: ${message.content}`);
+        client.send(`${message.author.tag}: ${message.content}`);
       }
     });
 

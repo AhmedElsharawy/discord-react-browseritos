@@ -67,36 +67,36 @@ function ChatBox() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="aspect-w-1 aspect-h-1 w-full rounded bg-gray-700 p-4 shadow md:w-1/2">
-        <div className="mb-4 h-64 overflow-auto rounded bg-gray-800 p-4">
-          {messages.map((message, index) => (
-            <div key={index} className="mb-2">
-              <div className="inline-block rounded bg-pink-500 px-2 py-1 text-white">
-                {message}
-              </div>
-            </div>
-          ))}
-          <div ref={messagesEndRef} />
-        </div>
-        <form onSubmit={sendMessage}>
-          <div className="flex">
-            <input
-              type="text"
-              className="mr-2 flex-grow rounded border bg-gray-800 px-2 py-1 text-white"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-            />
-            <button
-              type="submit"
-              className="rounded bg-pink-500 px-4 py-1 text-white"
-            >
-              Send
-            </button>
+    <div className="flex flex-col h-screen">
+    <div className="flex-grow overflow-auto scrollbar-hide my-4 mx-auto p-4 w-full max-w-4xl bg-gray-900 ">
+      {messages.map((message, index) => (
+        <div key={index} className="mb-2 last:mb-0">
+          <div className="inline-block rounded-lg bg-pink-600 px-4 py-2 text-white shadow">
+            {message}
           </div>
-        </form>
-      </div>
+        </div>
+      ))}
+      <div ref={messagesEndRef} />
     </div>
+    <form onSubmit={sendMessage} className="mb-4 mx-auto w-full max-w-4xl">
+      <div className="flex gap-2">
+        <input
+          type="text"
+          className="flex-grow rounded-lg border-0 bg-gray-800 px-4 py-2 text-white placeholder-gray-400 focus:ring-2 focus:ring-pink-500"
+          placeholder="Type your message..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <button
+          type="submit"
+          className="rounded-lg bg-pink-600 px-6 py-2 text-white hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500"
+        >
+          Send
+        </button>
+      </div>
+    </form>
+  </div>
+  
   );
 }
 
