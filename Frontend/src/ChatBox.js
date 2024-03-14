@@ -82,7 +82,7 @@ function ChatBox() {
       <div className="flex gap-2">
         <input
           type="text"
-          className="flex-grow rounded-lg border-0 bg-gray-800 px-4 py-2 text-white placeholder-gray-400 focus:ring-2 focus:ring-pink-500"
+          className="flex-grow rounded-lg border-0 bg-gray-900 px-4 py-2 text-white placeholder-gray-400 focus:ring-2 focus:ring-pink-500"
           placeholder="Type your message..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
