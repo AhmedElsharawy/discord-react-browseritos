@@ -11,7 +11,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* link image from images file and add blur to it only */
   background-image: url('./assets/images/pink_background.png');  
-  
+  height: 100vh;
 }
 
 code {
@@ -27,4 +27,9 @@ code {
 .scrollbar-hide {
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */
+}
+
+.chatbox{
+  height: 85vh;
+  margin: 20px;
 }

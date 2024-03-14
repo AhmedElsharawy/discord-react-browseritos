@@ -67,8 +67,8 @@ function ChatBox() {
   };
 
   return (
-    <div className="flex flex-col h-screen">
-    <div className="flex-grow overflow-auto scrollbar-hide my-4 mx-auto p-4 w-full max-w-4xl bg-gray-900 ">
+    <div className="flex flex-col chatbox">
+    <div className="flex-grow overflow-auto scrollbar-hide my-4 mx-auto p-4 w-full max-w-4xl bg-gray-900 flex flex-col-reverse rounded-lg">
       {messages.map((message, index) => (
         <div key={index} className="mb-2 last:mb-0">
           <div className="inline-block rounded-lg bg-pink-600 px-4 py-2 text-white shadow">
