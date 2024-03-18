@@ -1,9 +1,7 @@
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
+import { clientId, guildId, tokenID} from './config.json';
 
-const token = 'MTIxMTc0MzI3Nzc3OTUyMTY0OA.GP1Q7K.SuEYrlEnW3GslWpjDqUhosQWcmYrjQ3WXqYGEs';
-const clientId = '1211743277779521648';
-const guildId = '884942140252258344'; // Make sure to add your Guild ID here
 
 const commands = [
   {
@@ -17,7 +15,7 @@ const commands = [
 
 ];
 
-const rest = new REST({ version: '9' }).setToken(token);
+const rest = new REST({ version: '9' }).setToken(tokenID);
 
 (async () => {
   try {

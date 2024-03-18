@@ -9,5 +9,6 @@ const sslConfig = {
 
 const tokenID = process.env.TOKEN_ID;
 const channelID = process.env.CHANNEL_ID;
+const guildID = process.env.GUILD_ID;
 
-export { sslConfig, tokenID, channelID };
+export { sslConfig, tokenID, channelID, guildID };
